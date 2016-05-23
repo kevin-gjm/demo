@@ -69,7 +69,8 @@ ssize_t writen(int fd,const void *buf,size_t count)
 void senf_func(int fd,char c)
 {
     set_buff(c);
-    sleep(1);
+    usleep(10000); //0.01s 1s=1000ms=1000000us
+//    sleep(1);
     writen(fd,buff,sizeof(buff));
 }
 int  recv_func(int fd)
@@ -82,12 +83,12 @@ int  recv_func(int fd)
         return -1;
     }
 /*
-    int write_length = fwrite(buff,sizeof(char),length,fp);
-    if(write_length < length)
-    {
-        printf("file write error\n");
-        return -1;
-    }
+  int write_length = fwrite(buff,sizeof(char),length,fp);
+  if(write_length < length)
+  {
+  printf("file write error\n");
+  return -1;
+  }
 */
     printf("%s",buff);
     bzero(buff,sizeof(buff));
@@ -100,6 +101,8 @@ void usage()
             " -p <port>          The port server listen\n"
             " -s                 Make client as sender\n"
             " -r                 Make client as recv\n"
+            "\n"
+            " if have no arg,use the default config!\n"
         );
 }
 
@@ -112,13 +115,11 @@ int main(int argc, char **argv)
 
     int opt=0;
     int options_index =0;
-/*
-  if(argc ==1)
-  {
-  usage();
-  return 2;
-  }
-*/
+    if(argc ==1)
+    {
+        usage();
+    }
+
     while((opt = getopt_long(argc,argv,"sri:p:",long_options,&options_index))!=EOF)
     {
         switch(opt)
@@ -150,12 +151,11 @@ int main(int argc, char **argv)
         // no set make it as recv
         recv = 1;
     }
-/*
-    printf("s:%d\n",send);
-    printf("r:%d\n",recv);
-    printf("p:%d\n",port);
+    printf("is sender:%d\n",send);
+    printf("is recv:%d\n",recv);
+    printf("port:%d\n",port);
     printf("ip:%s\n",server_ip);
-*/
+
     struct sockaddr_in client_addr;
     bzero(&client_addr,sizeof(client_addr));
     client_addr.sin_family = AF_INET;

@@ -52,7 +52,7 @@ static void errorcb(struct bufferevent *bev, short error, void *ctx)
         if (error & BEV_EVENT_EOF)
         {
                 /* connection has been closed, do any clean up here */
-                printf("sender connection closed\n");
+                printf("one connection closed\n");
         }
         else if (error & BEV_EVENT_ERROR)
         {
@@ -64,8 +64,10 @@ static void errorcb(struct bufferevent *bev, short error, void *ctx)
                 /* must be a timeout event handle, handle it */
                 printf("Timed out\n");
         }
+        Rec_set.erase(bev);
         bufferevent_free(bev);
         Sender = NULL;
+        printf("There has %zu connectors left\n",Rec_set.size());
 }
 
 

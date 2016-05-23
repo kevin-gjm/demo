@@ -27,7 +27,7 @@ void do_accept(evutil_socket_t listener, short event, void *arg)
 
         Rec_set.insert(bev);
         send_func_set(bev);
-
+        printf("There has %zu connectors\n",Rec_set.size());
         //使用bufferevent_socket_new创建一个struct bufferevent *bev，关联该sockfd，托管给event_base
         ////BEV_OPT_CLOSE_ON_FREE表示释放bufferevent时关闭底层传输端口。这将关闭底层套接字，释放底层bufferevent等。
         //  bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
