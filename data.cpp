@@ -2,4 +2,4 @@
 #include "common.h"
 
 set<struct bufferevent*> Rec_set;
-struct bufferevent *Sender = NULL;
+//struct bufferevent *Sender = NULL;

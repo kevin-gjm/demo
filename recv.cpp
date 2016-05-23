@@ -15,7 +15,7 @@ static void readcb(struct bufferevent *bev, void *ctx)
         size_t output_len = evbuffer_get_length(output);
         printf("output_len: %zu\n", output_len);
 
-        bufferevent_write_buffer(Sender,input);//发给发送者
+        //bufferevent_write_buffer(Sender,input);//发给发送者
         evbuffer_add_buffer(output,input); //echo
 
 }

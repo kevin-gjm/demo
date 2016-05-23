@@ -66,7 +66,7 @@ static void errorcb(struct bufferevent *bev, short error, void *ctx)
         }
         Rec_set.erase(bev);
         bufferevent_free(bev);
-        Sender = NULL;
+        //Sender = NULL;
         printf("There has %zu connectors left\n",Rec_set.size());
 }
 

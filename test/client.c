@@ -22,6 +22,7 @@ static const struct option long_options[]=
     {"port",required_argument,NULL,'p'},
     {"sender",no_argument,NULL,'s'},
     {"recv",no_argument,NULL,'r'},
+    {"help",no_argument,NULL,'h'},
     {NULL,0,NULL,0}
 };
 
@@ -96,13 +97,13 @@ int  recv_func(int fd)
 }
 void usage()
 {
-    fprintf(stderr,"clent [option] ...\n"
+    fprintf(stderr,"client [option] ...\n"
             " -i <ip>            The server ip address.\n"
             " -p <port>          The port server listen\n"
             " -s                 Make client as sender\n"
             " -r                 Make client as recv\n"
-            "\n"
-            " if have no arg,use the default config!\n"
+			" -h                 Display the help message\n"
+            " If have no arg,will use the default config!\n"
         );
 }
 
@@ -120,13 +121,14 @@ int main(int argc, char **argv)
         usage();
     }
 
-    while((opt = getopt_long(argc,argv,"sri:p:",long_options,&options_index))!=EOF)
+    while((opt = getopt_long(argc,argv,"srhi:p:",long_options,&options_index))!=EOF)
     {
         switch(opt)
         {
         case 0:break;
         case 's':send = 1; break;
         case 'r':recv = 1;break;
+        case 'h':usage();break;
         case 'p':port = atoi(optarg);break;
         case 'i':server_ip = optarg;break;
         }
@@ -151,10 +153,12 @@ int main(int argc, char **argv)
         // no set make it as recv
         recv = 1;
     }
-    printf("is sender:%d\n",send);
-    printf("is recv:%d\n",recv);
-    printf("port:%d\n",port);
-    printf("ip:%s\n",server_ip);
+	printf(" The config list:\n");
+    printf(" Is sender:%d\n",send);
+    printf(" Is recv:%d\n",recv);
+    printf(" Port:%d\n",port);
+    printf(" Ip:%s\n",server_ip);
+	printf("\n\n\n");
 
     struct sockaddr_in client_addr;
     bzero(&client_addr,sizeof(client_addr));

@@ -2,7 +2,7 @@
 CC=g++
 CFLAGS=-Wall -g -std=c++11
 BIN=server
-OBJS=buffer_server.o send.o recv.o data.o
+OBJS=buffer_server.o send.o data.o
 LIBS=-levent
 $(BIN):$(OBJS)
 	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
